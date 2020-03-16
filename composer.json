@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "simple-php/assets": "dev-master",
-        "nette/utils": "^3.0",
+        "nette/utils": "^3.1"
     },
     "license": "MIT",
     "authors": [
