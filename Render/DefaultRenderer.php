@@ -372,6 +372,13 @@ class DefaultRenderer {
         return is_array($form) ? join('', $form): $form;
     }
 
+    function renderErrors($errors) {
+        if ($errors) {
+            return '<div class="errors">'.$errors.'</div>';
+        }
+        return '';
+    }
+
 
    /* function renderElement() {
         $type = $params['type'] ?: 'text';

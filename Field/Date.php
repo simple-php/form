@@ -4,7 +4,7 @@ namespace SimplePHP\Form\Field;
 
 use SimplePHP\Assets;
 use Nette\Utils\Html;
-use SimplePHP\Form\Glyphicon;
+use SimplePHP\Form\Helpers\Glyphicon;
 use SimplePHP\Form\Form;
 
 class Date {
@@ -44,7 +44,7 @@ class Date {
 
     }
 
-    static function renderClearButton($div, $attr) {
+    /*static function renderClearButton($div, $attr) {
         if ((!isset($attr['disabled']) || !$attr['disabled'])
             && (!isset($attr['required']) || !$attr['required'])) {
             $div->addHtml(
@@ -54,7 +54,7 @@ class Date {
                 ->style('float: right; margin-left: 8px;margin-top:1px;position:relative;color:#444')
             );
         }
-    }
+    }*/
 
     static function render($name, $value, $attr) {
         static::assets();
@@ -71,7 +71,7 @@ class Date {
             ->style('overflow: hidden; cursor: pointer; text-overflow: ellipsis')
             ->addHtml(Glyphicon::calendar);
 
-        static::renderClearButton($div, $attr);
+        //static::renderClearButton($div, $attr);
 
         $div->addHtml(
             Html::el('b', ['class' => 'caret'])->style('float: right; margin-top: 7px').
@@ -107,7 +107,7 @@ class Date {
                     var v = moment(date).format("L");
                     $("#'.$id.'_div .simple-php-form_field_date-clear").show();
                     $("#'.$id.'").val(v);
-                    var $el = $("#'.$id.'_div span").text(moment(date).format("LL"));
+                    var $el = $("#'.$id.'_div span").text(moment(date).format("L"));
                 });').'
                 
                 if ($("#'.$id.'").val() != "") {
@@ -116,7 +116,7 @@ class Date {
 
                     var date = moment(v,"DD.MM.YYYY");
 
-                    $("#'.$id.'_div span").text(date.format("LL"));
+                    $("#'.$id.'_div span").text(date.format("L"));
                 } else {
                     $("#'.$id.'_div .simple-php-form_field_date-clear").hide();
                 }

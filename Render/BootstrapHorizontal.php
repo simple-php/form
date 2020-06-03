@@ -104,6 +104,7 @@ class BootstrapHorizontal extends DefaultRenderer {
     {
         $this->initFormClasses();
         $form = [];
+
         if ($this->_form->options['form']) {
             $form = Html::el('form')->setClass('form-horizontal');
             if ($this->_form->options['id']) $form->id($this->_form->options['id']);
@@ -143,5 +144,12 @@ class BootstrapHorizontal extends DefaultRenderer {
         }
 
         return is_array($form) ? join('', $form): $form;
+    }
+
+    function renderErrors($errors) {
+        if ($errors) {
+            return '<div class="alert alert-danger">'.$errors.'</div>';
+        }
+        return '';
     }
 }

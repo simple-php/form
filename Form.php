@@ -12,15 +12,15 @@ class Form
     ];
 
     static $fieldTypes = [
-        'checklist' => __NAMESPACE__.''\\Field\\Checklist',
+        'checklist' => __NAMESPACE__.'\\Field\\Checklist',
         'date' => __NAMESPACE__.'\\Field\\Date',
         'dateInput' => __NAMESPACE__.'\\Field\\DateInput',
         'datetime' => __NAMESPACE__.'\\Field\\Datetime',
         'duration' => __NAMESPACE__.'\\Field\\Duration',
-        'file' => __NAMESPACE__.''\\Field\\Form',
-        'imgFile' => __NAMESPACE__.''\\Field\\ImgFile',
-        'summernote' => __NAMESPACE__.''\\Field\\SummerNote',
-        'summerNote' => __NAMESPACE__.''\\Field\\SummerNote',
+        'file' => __NAMESPACE__.'\\Field\\File',
+        'imgFile' => __NAMESPACE__.'\\Field\\ImgFile',
+        'summernote' => __NAMESPACE__.'\\Field\\SummerNote',
+        'summerNote' => __NAMESPACE__.'\\Field\\SummerNote',
     ];
 
     /**
@@ -95,7 +95,12 @@ class Form
 
             $this->renderer = new $className($this);
         }
-        return $this->renderer->render($this);
+        return $this->renderer->renderErrors($this->renderErrors()) . $this->renderer->render($this);
+    }
+
+    function __toString()
+    {
+        return ''.$this->render();
     }
 
     function renderErrors() {
@@ -394,6 +399,22 @@ class Form
             }
         }
         return empty($html) ? $html : '<ul>'.$html.'</ul>';
+    }
+
+    static function saveFile($name, $path, $filename) {        
+        $files = self::getFiles($name);
+        if (!isset($files[0])) {
+            self::_addFileError($name, 0, self::FILESAVE_ERROR);
+            return false;
+        }
+        $file = $files[0];
+        $dst = rtrim(realpath($path), '/\\'). DIRECTORY_SEPARATOR . $filename;
+        if (move_uploaded_file($file['tmp_name'], $dst)) {
+            return $file + ['saved' => $dst];
+        } else {
+            self::_addFileError($name, 0, self::FILESAVE_ERROR);
+            return false;
+        }
     }
 
     static function saveFiles($name, $path) {

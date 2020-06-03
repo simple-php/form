@@ -4,7 +4,7 @@ namespace SimplePHP\Form\Field;
 
 use SimplePHP\Assets;
 use SimplePHP\Form\Helpers\Glyphicon;
-use SimplePHP\Form\BaseForm;
+use SimplePHP\Form\Form;
 use Nette\Utils\Html;
 
 class DateInput {
